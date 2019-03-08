@@ -8,8 +8,8 @@
 from django.db import models
 
 
-class Donations(models.Model):
-    custid = models.TextField(blank=True, null=True)
+class Donation(models.Model):
+    custid = models.TextField(primary_key=True)
     email = models.TextField(blank=True, null=True)
     date = models.TextField(blank=True, null=True)
     value = models.TextField(blank=True, null=True)
@@ -18,9 +18,14 @@ class Donations(models.Model):
         managed = False
         db_table = 'donations'
 
+    def __str__(self):
+        return '{}: {} (${} on {})'.format(
+            self.custid, self.email, self.value, self.date
+        )
 
-class Subscriptions(models.Model):
-    custid = models.TextField(blank=True, null=True)
+
+class Subscription(models.Model):
+    custid = models.TextField(primary_key=True)
     email = models.TextField(blank=True, null=True)
     date = models.TextField(blank=True, null=True)
     plan = models.TextField(blank=True, null=True)
@@ -29,3 +34,8 @@ class Subscriptions(models.Model):
     class Meta:
         managed = False
         db_table = 'subscriptions'
+
+    def __str__(self):
+        return '{}: {} ({} initiated on {})'.format(
+            self.custid, self.email, self.plan, self.date
+        )
