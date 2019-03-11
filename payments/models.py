@@ -25,11 +25,24 @@ class Donation(models.Model):
 
 
 class Subscription(models.Model):
+    SUBSCRIPTION_PLANS = {
+        # plan name: amount in cents
+        'test': 100,
+        'member': 5000,
+        'family': 7500,
+        'supporter': 1000,
+        'student': 2500,
+    }
+
     custid = models.TextField(primary_key=True)
     email = models.TextField(blank=True, null=True)
     date = models.TextField(blank=True, null=True)
     plan = models.TextField(blank=True, null=True)
     utoken = models.TextField(blank=True, null=True)
+
+    @property
+    def amount(self):
+        return self.SUBSCRIPTION_PLANS[self.plan]
 
     class Meta:
         managed = False
