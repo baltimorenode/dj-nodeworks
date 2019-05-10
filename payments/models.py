@@ -52,3 +52,39 @@ class Subscription(models.Model):
         return '{}: {} ({} initiated on {})'.format(
             self.custid, self.email, self.plan, self.date
         )
+
+class Person(models.Model):
+    name = models.CharField(255)
+    date_given_key = models.DateField()
+    donation = models.ManyToManyField(Donation)
+    subscription = models.ManyToManyField(Subscription)
+
+    FEMINIE = 'F'
+    MASCULINE = 'M'
+    NEUTRAL = 'N'
+    GENDER_PRONOUNS_CHOICES = (
+        (FEMINIE, 'She, Her, Hers'),
+        (MASCULINE, 'He, Him, His'),
+        (NEUTRAL, 'Yo, Yo, Yo\'s'),
+    )
+    gender_pronouns = models.CharField(
+        max_length=1,
+        choices=GENDER_PRONOUNS_CHOICES,
+        default=NEUTRAL,
+    )
+    
+    key_holder = models.BooleanField(
+        default=False
+    )
+    
+    official_email = models.TextField(blank=True, null=True)
+    bill_email = models.TextField(blank = True, null= True)
+    mailing_list_email = models.TextField(blank = True, null= True)
+
+    phone_numbers = models.TextField(blank=True, null=True)
+
+
+
+
+
+
